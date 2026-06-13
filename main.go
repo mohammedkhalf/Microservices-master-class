@@ -7,8 +7,14 @@ import (
 	"net/http"
 )
 
-func home(wr http.ResponseWriter, r *http.Request) {
-	body, _ := io.ReadAll(r.Body)
+func home(rw http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		rw.WriteHeader(http.StatusBadRequest)
+		rw.Write([]byte("Oooop"))
+		return
+	}
+
 	println(string(body))
 }
 
